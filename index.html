@@ -1,3 +1,6 @@
+To incorporate the birthday message and image into your HTML, while removing the countdown timer on the birthday, we need to adjust the JavaScript. Here is the updated code:
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -15,13 +18,13 @@
             align-items: center;
             justify-content: center;
         }
-        .countdown {
+        .countdown, .birthday-message {
             background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-        .countdown h1 {
+        .countdown h1, .birthday-message h1 {
             font-size: 3rem;
             margin-bottom: 20px;
             animation: fadeIn 2s ease-in-out, colorChange 5s infinite;
@@ -29,6 +32,9 @@
         .time {
             font-size: 2.5rem;
             animation: fadeIn 2s ease-in-out, colorChange 5s infinite;
+        }
+        .birthday-message {
+            display: none;
         }
         @keyframes fadeIn {
             from {
@@ -120,7 +126,7 @@
                 transform: translateY(-100vh) scale(1.2);
             }
         }
-		#disqus_thread {
+        #disqus_thread {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             padding: 20px;
@@ -136,7 +142,7 @@
             padding: 10px;
             margin-bottom: 10px;
         }
-		img {
+        img {
             margin-bottom: 1em;
             max-width: 100%;
             height: auto;
@@ -145,15 +151,26 @@
 </head>
 <body>
     <div class="countdown">
-		<img id="main-image" src="https://media.tenor.com/qBxnw59KgQcAAAAM/zoolander-boss.gif">
+        <img id="main-image" src="https://media.tenor.com/qBxnw59KgQcAAAAM/zoolander-boss.gif">
         <h1>До дня рождения Льва осталось:</h1>
-		<div style="margin-top:20px">
-        <div id="time" class="time"></div>
-		<div style="margin-top:20px">
-		<div id="disqus_thread"></div>
+        <div style="margin-top:20px">
+            <div id="time" class="time"></div>
+        </div>
+    </div>
+    <div class="birthday-message">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHy8r2Wu05U_hVraUuUP4HyeCw3ZPnOKr_6w&s" alt="Happy Birthday">
+        <h1>С Днем Рождения, Лёва!</h1>
+        <p>От души желаем, Лёва,<br>
+        Мы настроя боевого,<br>
+        Позитива и успеха,<br>
+        Счастья, радости и смеха.<br>
+        Мудрым будь ты и красивым,<br>
+        Волевым и справедливым,<br>
+        Денежек тебе в карман<br>
+        И удачи караван!</p>
     </div>
     <div class="confetti" id="confetti"></div>
-	<audio id="background-audio" src="https://lev.flexboys.ru/385a54c92b1d5ab.mp3" autoplay loop></audio>		
+    <audio id="background-audio" src="https://lev.flexboys.ru/385a54c92b1d5ab.mp3" autoplay loop></audio>        
     <div class="balloons">
         <div class="balloon"></div>
         <div class="balloon"></div>
@@ -171,6 +188,12 @@
             }
 
             const diff = birthday - now;
+
+            if (diff <= 0) {
+                document.querySelector('.countdown').style.display = 'none';
+                document.querySelector('.birthday-message').style.display = 'block';
+                return;
+            }
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -199,27 +222,17 @@
         setInterval(updateCountdown, 1);
         setInterval(createConfettiPiece, 200);
     </script>
-	<script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-    /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
-    (function() { // DON'T EDIT BELOW THIS LINE
-    var d = document, s = d.createElement('script');
-    s.src = 'https://lev-flexboys-ru.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <script>
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lev-flexboys-ru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+</body
